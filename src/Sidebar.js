@@ -3,8 +3,8 @@ import './Sidebar.css'
 
 const Sidebar = () => {
     return (
-        <div>
-            
+        <div className='sidebar'>
+            I am sidebar
         </div>
     )
 }
