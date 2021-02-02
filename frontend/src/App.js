@@ -9,7 +9,6 @@ function App() {
 useEffect(() => {
   // Enable pusher logging - don't include this in production
 
-
   var pusher = new Pusher("f0cfbf8551983c35ad8f", {
     cluster: "eu",
   });
