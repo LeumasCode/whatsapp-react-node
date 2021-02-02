@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Avatar, IconButton } from "@material-ui/core";
+import instance from "./axios";
 import {
   AttachFile,
   InsertEmoticon,
@@ -10,12 +11,20 @@ import {
 import React from "react";
 import "./Chat.css";
 
-const Chat = () => {
+const Chat = ({ messages }) => {
   const [input, setInput] = useState("");
 
-const sendMessage = () => {
-    console.log('sent');
-}
+  const sendMessage = async (e) => {
+    e.preventDefault();
+  await  instance.post("/messages/new", {
+      message: input,
+      name: "sam",
+      timestamp: "Just Now",
+      received: false,
+    });
+
+    setInput('')
+  };
 
   return (
     <div className="chat">
@@ -40,17 +49,15 @@ const sendMessage = () => {
       </div>
 
       <div className="chat__body">
-        <p className="chat__message">
-          <span className="chat__name">Sammy</span>
-          This is a message
-          <span className="chat__timestamp">{new Date().toUTCString()}</span>
-        </p>
-
-        <p className="chat__message chat__receiver">
-          <span className="chat__name">Sammy</span>
-          This is a message
-          <span className="chat__timestamp">{new Date().toUTCString()}</span>
-        </p>
+        {messages.map((message) => (
+          <p
+            className={`chat__message ${message.received && "chat__received"}`}
+          >
+            <span className="chat__name">{message.name}</span>
+            {message.message}
+            <span className="chat__timestamp">{message.timestamp}</span>
+          </p>
+        ))}
       </div>
 
       <div className="chat__footer">

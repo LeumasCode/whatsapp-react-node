@@ -2,14 +2,14 @@ import express from "express";
 import mongoose from "mongoose";
 import Pusher from "pusher";
 import Messages from "./dbMessages.js";
-import cors from 'cors'
+import cors from "cors";
 
 const app = express();
 
 app.use(express.json());
 
 // add cors
-app.use(cors())
+app.use(cors());
 
 // configure pusher
 const pusher = new Pusher({
@@ -32,6 +32,8 @@ db.once("open", () => {
       pusher.trigger("messages", "inserted", {
         name: messageDetatails.name,
         message: messageDetatails.message,
+        timestamp: messageDetatails.timestamp,
+        received: messageDetatails.received,
       });
     } else {
       console.log("pusher trigger error");
